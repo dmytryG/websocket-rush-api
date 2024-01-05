@@ -73,9 +73,15 @@ export class Client {
 
             const JSONToSend = JSON.stringify(message)
 
+            const timeout = setTimeout(() => {
+                this.pendingRequests.delete(messageId); // Clear pending request
+                reject(new APIError('Request timed out', 408));
+            }, config.timeout ?? 10000);
+
             const onResolved = (result: Message) => {
                 this.pendingRequests.delete(messageId)
                 Logger.log("Request resolved", result)
+                clearTimeout(timeout)
                 resolve(result)
             }
 
