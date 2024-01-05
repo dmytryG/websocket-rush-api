@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import {Message} from "../types/Message";
-import {Client} from "../types/Client";
+import {SocketClient} from "../types/SocketClient";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 import Logger from "../core/Logger";
@@ -11,7 +11,7 @@ export class Application {
     private preProcessors: Array<(req: Message, application: Application) => Promise<any>> = [];
     private endpoints: Array<Endpoint> = [];
     private errorProcessor: ((e: any) => Promise<any>) | null = null;
-    private clients: Array<Client> = [];
+    private clients: Array<SocketClient> = [];
 
     constructor(port: number) {
         this.args = { port }
@@ -34,7 +34,7 @@ export class Application {
         this.wss.on('connection', (ws: WebSocket) => {
             this.clients.push({
                 socket: ws
-            } as Client)
+            } as SocketClient)
 
             ws.on('message', async (message: string) => {
                 Logger.log(`Received message: ${message}`);

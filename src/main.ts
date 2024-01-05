@@ -1,8 +1,8 @@
 import {Application} from "./core/Application";
 import Logger from "./core/Logger";
 import APIError from "./types/APIError";
-import {Client} from "./types/Client";
+import {SocketClient} from "./types/SocketClient";
 import {Endpoint} from "./types/Endpoint";
 import {Message} from "./types/Message";
 
-export { Application, APIError, Client, Endpoint, Message, Logger }
+export { Application, APIError, SocketClient, Endpoint, Message, Logger }

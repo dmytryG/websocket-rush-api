@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import {Client} from "../types/Client";
+import {SocketClient} from "./SocketClient";
 
 export interface Message {
     data: any
@@ -7,6 +7,6 @@ export interface Message {
     id: string
     topic: string
     isResponse: boolean
-    client: Client | null | undefined
+    client: SocketClient | null | undefined
     isError: boolean | null | undefined
 }

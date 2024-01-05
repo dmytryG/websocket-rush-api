@@ -1,11 +1,14 @@
 import {Application} from "../src/core/Application";
 import {Logger} from "../src/core/Logger";
+import {Client} from "../src/core/Client";
 import APIError from "../src/types/APIError";
-import {Client} from "../src/types/Client";
+import {RequestCallback} from "../src/types/RequestCallback";
+import {RequestConfig} from "../src/types/RequestConfig";
+import {SocketClient} from "../src/types/SocketClient";
 import {Endpoint} from "../src/types/Endpoint";
 import {Message} from "../src/types/Message";
 
 
 declare module "@dmytryG/websocket-rush-api";
 
-export { Application, APIError, Client, Endpoint, Message, Logger }
+export { Application, APIError, SocketClient, Endpoint, Message, Logger, Client, RequestCallback, RequestConfig }
