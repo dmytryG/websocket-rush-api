@@ -5,11 +5,13 @@ import {RequestConfig} from "../types/RequestConfig";
 import {RequestCallback} from "../types/RequestCallback";
 import Logger from "./Logger";
 import APIError from "../types/APIError";
+import {Endpoint} from "../types/Endpoint";
 
 export class Client {
     private ws: WebSocket | null = null;
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
+    private listeners: Map<string, Endpoint>;
 
     constructor(private url: string) {
         this.pendingRequests = new Map()
@@ -23,10 +25,13 @@ export class Client {
                 Logger.log("Client got message", parsed, "with id", parsed.id)
                 Logger.log(`There is ${client.pendingRequests.size} pending requests`)
                 const pending = client.pendingRequests.get(parsed.id)
-                if (!pending) {
-                    return
-                } else {
+                const listener = client.listeners.get(parsed.topic)
+                if (pending) {
                     pending.callback(parsed)
+                } else if (listener) {
+                    listener.function(parsed)
+                } else {
+                    return
                 }
             } catch (e) {
                 Logger.error("Error in incoming message loop", e)
@@ -95,6 +100,41 @@ export class Client {
 
             Logger.log("Sent request", JSONToSend)
         })
+    }
+
+    public subscribeListener(listener: Endpoint): void {
+        this.listeners.set(listener.topic, listener)
+    }
+
+    public unsubscribeListener(topic: string): void {
+        this.listeners.delete(topic)
+    }
+
+    public getListener(topic: string): Endpoint | undefined {
+        const listener = this.listeners.get(topic)
+        return listener
+    }
+
+    public async send(config: RequestConfig): Promise<void> {
+        if (!this.connected) {
+            throw new APIError('WebSocket client is not connected', 404);
+        }
+        if (!config.topic) {
+            throw new APIError('Topic have to be provided', 400);
+        }
+        const messageId = uuidv4()
+        const message = {
+            data: config.data,
+            context: config.context,
+            id: messageId,
+            topic: config.topic,
+            isResponse: false,
+            client: undefined,
+            isError: false
+        } as Message
+
+        const JSONToSend = JSON.stringify(message)
+        this.ws!.send(JSONToSend)
     }
 
     public onClose(callback: () => void): void {

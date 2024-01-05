@@ -4,6 +4,8 @@ import {SocketClient} from "../types/SocketClient";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 import Logger from "../core/Logger";
+import {RequestConfig} from "../types/RequestConfig";
+import {v4 as uuidv4} from "uuid";
 
 export class Application {
     private args: any = undefined;
@@ -34,6 +36,40 @@ export class Application {
         if (client) {
             client.context = context
         }
+    }
+
+    // Broadcast message
+    public async scream(config: RequestConfig): Promise<void> {
+        const messageId = uuidv4()
+        const message = {
+            data: config.data,
+            context: config.context,
+            id: messageId,
+            topic: config.topic,
+            isResponse: true,
+            client: undefined,
+            isError: false
+        } as Message
+
+        const JSONToSend = JSON.stringify(message)
+        this.wss!.send(JSONToSend)
+    }
+
+    // Send privately
+    public async whisper(config: RequestConfig, wsc: SocketClient): Promise<void> {
+        const messageId = uuidv4()
+        const message = {
+            data: config.data,
+            context: config.context,
+            id: messageId,
+            topic: config.topic,
+            isResponse: true,
+            client: undefined,
+            isError: false
+        } as Message
+
+        const JSONToSend = JSON.stringify(message)
+        wsc.socket!.send(JSONToSend)
     }
 
     public listen() {
