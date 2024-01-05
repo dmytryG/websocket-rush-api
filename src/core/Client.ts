@@ -9,15 +9,18 @@ import APIError from "../types/APIError";
 export class Client {
     private ws: WebSocket | null = null;
     private connected: boolean = false
-    private pendingRequests: Map<string, RequestCallback> = new Map();
+    private pendingRequests: Map<string, RequestCallback>;
 
-    constructor(private url: string) {}
+    constructor(private url: string) {
+        this.pendingRequests = new Map()
+    }
 
     protected processIncoming(msg: WebSocket.MessageEvent): void {
         try {
             // @ts-ignore
             const parsed: Message = JSON.parse(msg.data)
-            Logger.log("Client got message", parsed)
+            Logger.log("Client got message", parsed, "with id", parsed.id)
+            Logger.log(`There is ${this.pendingRequests.size} pending requests`)
             const pending = this.pendingRequests.get(parsed.id)
             if (!pending) {
                 return
