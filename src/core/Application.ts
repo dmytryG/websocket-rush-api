@@ -29,6 +29,13 @@ export class Application {
         this.errorProcessor = func
     }
 
+    public updateClientContext(ws: WebSocket, context: any): void {
+        const client = this.clients.find((c) => c.socket === ws)
+        if (client) {
+            client.context = context
+        }
+    }
+
     public listen() {
         this.wss = new WebSocket.Server(this.args);
         this.wss.on('connection', (ws: WebSocket) => {
