@@ -19,6 +19,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
-    "url": "https://github.com/dmytryG/websocket-rush-api.git"
+    "url": "git://github.com/dmytryG/websocket-rush-api.git"
   }
 }
