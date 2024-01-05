@@ -9,7 +9,7 @@ export class Application {
     private wss: WebSocket.Server;
     private preProcessors: Array<(req: Message, application: Application) => Promise<any>> = [];
     private endpoints: Array<Endpoint> = [];
-    private errorProcessor: ((e: any) => Promise<Message>) | null = null;
+    private errorProcessor: ((e: any) => Promise<any>) | null = null;
     private clients: Array<Client>;
 
     constructor(port: number) {
