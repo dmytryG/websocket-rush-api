@@ -5,12 +5,12 @@ import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 
 export class Application {
-    private args: any;
-    private wss: WebSocket.Server;
+    private args: any = undefined;
+    private wss: any = undefined;
     private preProcessors: Array<(req: Message, application: Application) => Promise<any>> = [];
     private endpoints: Array<Endpoint> = [];
     private errorProcessor: ((e: any) => Promise<any>) | null = null;
-    private clients: Array<Client>;
+    private clients: Array<Client> = [];
 
     constructor(port: number) {
         this.args = { port }

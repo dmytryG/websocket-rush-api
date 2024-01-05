@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import {Client} from "~/types/Client";
+import {Client} from "../types/Client";
 
 export interface Message {
     data: any
