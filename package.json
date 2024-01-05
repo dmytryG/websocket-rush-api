@@ -1,5 +1,5 @@
 {
-  "name": "@dmytryG/websocket-rush-api",
+  "name": "@dmytryg/websocket-rush-api",
   "version": "1.0.0",
   "description": "A library for implementing and interraction with websocket API",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "ws": "^8.15.1"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@dmytryG"
+    "registry": "https://npm.pkg.github.com/@dmytryg"
   },
   "repository": {
     "url": "git://github.com/dmytryG/websocket-rush-api.git"
