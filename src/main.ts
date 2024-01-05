@@ -1,7 +1,7 @@
-import {Application} from "../src/core/Application";
-import APIError from "../src/types/APIError";
-import {Client} from "../src/types/Client";
-import {Endpoint} from "../src/types/Endpoint";
-import {Message} from "../src/types/Message";
+import {Application} from "./core/Application";
+import APIError from "./types/APIError";
+import {Client} from "./types/Client";
+import {Endpoint} from "./types/Endpoint";
+import {Message} from "./types/Message";
 
 export { Application, APIError, Client, Endpoint, Message }
