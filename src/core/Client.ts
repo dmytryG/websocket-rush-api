@@ -47,11 +47,14 @@ export class Client {
         await Logger.log("Socket successfully connected")
     }
 
-    public async request(config: RequestConfig): Promise<any> {
+    public async request(config: Partial<RequestConfig>): Promise<Message> {
         Logger.log("Requesting", config)
         return new Promise((resolve, reject) => {
             if (!this.connected) {
                 throw new APIError('WebSocket client is not connected', 404);
+            }
+            if (!config.topic) {
+                throw new APIError('Topic have to be provided', 400);
             }
             const messageId = uuidv4()
             const message = {
@@ -66,11 +69,10 @@ export class Client {
 
             const JSONToSend = JSON.stringify(message)
 
-            const onResolved = (result: string) => {
+            const onResolved = (result: Message) => {
                 this.pendingRequests.delete(messageId)
-                const obj = JSON.parse(result)
                 Logger.log("Request resolved", result)
-                resolve(obj)
+                resolve(result)
             }
 
             this.pendingRequests.set(messageId, { request: message, callback: onResolved })
