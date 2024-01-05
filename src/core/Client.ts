@@ -82,6 +82,10 @@ export class Client {
                 this.pendingRequests.delete(messageId)
                 Logger.log("Request resolved", result)
                 clearTimeout(timeout)
+                if (result.isError) {
+                    const error = new APIError(result.data.message, result.data.code, result.data.reason)
+                    reject(error)
+                }
                 resolve(result)
             }
 
