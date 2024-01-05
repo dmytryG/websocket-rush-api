@@ -15,22 +15,23 @@ export class Client {
         this.pendingRequests = new Map()
     }
 
-    protected processIncoming(msg: WebSocket.MessageEvent): void {
-        try {
-            // @ts-ignore
-            const parsed: Message = JSON.parse(msg.data)
-            Logger.log("Client got message", parsed, "with id", parsed.id)
-            Logger.log(`There is ${this.pendingRequests.size} pending requests`)
-            const pending = this.pendingRequests.get(parsed.id)
-            if (!pending) {
-                return
-            } else {
-                pending.callback(parsed)
+    protected processIncoming(client: Client): any {
+        return (msg: WebSocket.MessageEvent) => {
+            try {
+                // @ts-ignore
+                const parsed: Message = JSON.parse(msg.data)
+                Logger.log("Client got message", parsed, "with id", parsed.id)
+                Logger.log(`There is ${client.pendingRequests.size} pending requests`)
+                const pending = client.pendingRequests.get(parsed.id)
+                if (!pending) {
+                    return
+                } else {
+                    pending.callback(parsed)
+                }
+            } catch (e) {
+                Logger.error("Error in incoming message loop", e)
             }
-        } catch (e) {
-            Logger.error("Error in incoming message loop", e)
         }
-
     }
 
     public async connect(): Promise<void> {
@@ -42,7 +43,7 @@ export class Client {
             this.ws!.on('error', reject);
         });
 
-        this.ws!.onmessage = this.processIncoming
+        this.ws!.onmessage = this.processIncoming(this)
 
         this.ws!.on('close', this.onClose);
 
@@ -73,7 +74,7 @@ export class Client {
             const JSONToSend = JSON.stringify(message)
 
             const onResolved = (result: Message) => {
-                // this.pendingRequests.delete(messageId)
+                this.pendingRequests.delete(messageId)
                 Logger.log("Request resolved", result)
                 resolve(result)
             }
