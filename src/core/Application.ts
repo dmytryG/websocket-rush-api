@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
-import {Message} from "~/types/Message";
-import {Client} from "~/types/Client";
-import APIError from "~/types/APIError";
-import {Endpoint} from "~/types/Endpoint";
+import {Message} from "../types/Message";
+import {Client} from "../types/Client";
+import APIError from "../types/APIError";
+import {Endpoint} from "../types/Endpoint";
 
 export class Application {
     private args: any;

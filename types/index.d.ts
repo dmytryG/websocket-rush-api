@@ -6,3 +6,5 @@ import {Message} from "../src/types/Message";
 
 
 declare module "@dmytryG/websocket-rush-api";
+
+export { Application, APIError, Client, Endpoint, Message }
