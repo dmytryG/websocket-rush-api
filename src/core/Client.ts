@@ -70,7 +70,7 @@ export class Client {
             const JSONToSend = JSON.stringify(message)
 
             const onResolved = (result: Message) => {
-                this.pendingRequests.delete(messageId)
+                // this.pendingRequests.delete(messageId)
                 Logger.log("Request resolved", result)
                 resolve(result)
             }
