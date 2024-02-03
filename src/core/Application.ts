@@ -6,7 +6,7 @@ import {Endpoint} from "../types/Endpoint";
 import Logger from "../core/Logger";
 import {RequestConfig} from "../types/RequestConfig";
 import {v4 as uuidv4} from "uuid";
-import {Preprocessor} from "~/types/Preprocessor";
+import {Preprocessor} from "../types/Preprocessor";
 
 export class Application {
     private args: any = undefined;

@@ -1,6 +1,6 @@
 import {Message} from "../types/Message";
-import {Preprocessor} from "~/types/Preprocessor";
-import {Application} from "~/core/Application";
+import {Preprocessor} from "../types/Preprocessor";
+import {Application} from "../core/Application";
 
 export interface Endpoint {
     topic: string
