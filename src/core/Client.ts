@@ -29,7 +29,7 @@ export class Client {
                 if (pending) {
                     pending.callback(parsed)
                 } else if (listener) {
-                    listener.function(parsed)
+                    listener.function(parsed, undefined)
                 } else {
                     return
                 }
