@@ -6,11 +6,12 @@ import {Endpoint} from "../types/Endpoint";
 import Logger from "../core/Logger";
 import {RequestConfig} from "../types/RequestConfig";
 import {v4 as uuidv4} from "uuid";
+import {Preprocessor} from "~/types/Preprocessor";
 
 export class Application {
     private args: any = undefined;
     private wss: any = undefined;
-    private preProcessors: Array<(req: Message, application: Application) => Promise<any>> = [];
+    private preProcessors: Array<Preprocessor> = [];
     private endpoints: Array<Endpoint> = [];
     private errorProcessor: ((e: any) => Promise<any>) | null = null;
     private clients: Array<SocketClient> = [];
@@ -98,6 +99,11 @@ export class Application {
                         const endponit = this.endpoints.find((e) => e.topic === incomingMessage.topic)
                         if (!endponit) {
                             throw new APIError("Endpoint not found", 404)
+                        }
+                        if (endponit.preprocessors && endponit.preprocessors.length > 0) {
+                            for (const preprocessor of endponit.preprocessors) {
+                                await preprocessor(incomingMessage, this)
+                            }
                         }
                         const response = await endponit.function(incomingMessage)
                         if (response) {

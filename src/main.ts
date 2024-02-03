@@ -4,8 +4,9 @@ import APIError from "./types/APIError";
 import {SocketClient} from "./types/SocketClient";
 import {Endpoint} from "./types/Endpoint";
 import {Message} from "./types/Message";
+import {Preprocessor} from "./types/Preprocessor";
 import { Client } from "./core/Client";
 import { RequestCallback } from "./types/RequestCallback";
 import { RequestConfig } from "./types/RequestConfig";
 
-export { Application, APIError, SocketClient, Endpoint, Message, Logger, Client, RequestCallback, RequestConfig }
+export { Application, APIError, SocketClient, Endpoint, Message, Logger, Client, RequestCallback, RequestConfig, Preprocessor }
