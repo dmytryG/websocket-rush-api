@@ -105,7 +105,7 @@ export class Application {
                                 await preprocessor(incomingMessage, this)
                             }
                         }
-                        const response = await endponit.function(incomingMessage)
+                        const response = await endponit.function(incomingMessage, this)
                         if (response) {
                             const outcomingMessage: Message = {
                                 context: undefined,
