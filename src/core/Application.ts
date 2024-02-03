@@ -73,6 +73,25 @@ export class Application {
         wsc.socket!.send(JSONToSend)
     }
 
+    public async whisperFiltered(config: RequestConfig, filter: (c: SocketClient) => boolean): Promise<void> {
+        const clients = this.clients.filter(filter)
+        for (const client of clients) {
+            const messageId = uuidv4()
+            const message = {
+                data: config.data,
+                context: config.context,
+                id: messageId,
+                topic: config.topic,
+                isResponse: true,
+                client: undefined,
+                isError: false
+            } as Message
+
+            const JSONToSend = JSON.stringify(message)
+            client.socket!.send(JSONToSend)
+        }
+    }
+
     public listen() {
         this.wss = new WebSocket.Server(this.args);
         this.wss.on('connection', (ws: WebSocket) => {
