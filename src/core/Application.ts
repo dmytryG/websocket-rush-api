@@ -14,7 +14,7 @@ export class Application {
     private preProcessors: Array<Preprocessor> = [];
     private endpoints: Array<Endpoint> = [];
     private errorProcessor: ((e: any) => Promise<any>) | null = null;
-    private clients: Array<SocketClient> = [];
+    public clients: Array<SocketClient> = [];
 
     constructor(port: number) {
         this.args = { port }
