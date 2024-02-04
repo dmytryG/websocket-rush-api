@@ -8,7 +8,7 @@ import {SocketClient} from "../src/types/SocketClient";
 import {Endpoint} from "../src/types/Endpoint";
 import {Message} from "../src/types/Message";
 import {Preprocessor} from "../src/types/Preprocessor";
-import {BrowserClient} from "../src/core/BrowserClient";
+import {BClient} from "../src/core/BClient";
 
 
 declare module "@dmytryG/websocket-rush-api";
@@ -24,5 +24,5 @@ export {
     RequestCallback,
     RequestConfig,
     Preprocessor,
-    BrowserClient
+    BClient
 }

@@ -8,7 +8,7 @@ import {Endpoint} from "../types/Endpoint";
 import {client, IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
 import * as console from "console";
 
-export class BrowserClient {
+export class BClient {
     private ws: WebSocket | null = null;
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
@@ -30,7 +30,7 @@ export class BrowserClient {
         this._onCloseListener = value;
     }
 
-    protected processIncoming(client: BrowserClient): any {
+    protected processIncoming(client: BClient): any {
         return (msg: IMessageEvent) => {
             try {
                 const parsed: Message = JSON.parse(msg.data.toString());

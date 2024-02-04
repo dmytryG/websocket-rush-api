@@ -6,7 +6,7 @@ import {Endpoint} from "./types/Endpoint";
 import {Message} from "./types/Message";
 import {Preprocessor} from "./types/Preprocessor";
 import {Client} from "./core/Client";
-import {BrowserClient} from "./core/BrowserClient";
+import {BClient} from "./core/BClient";
 import {RequestCallback} from "./types/RequestCallback";
 import {RequestConfig} from "./types/RequestConfig";
 
@@ -21,5 +21,5 @@ export {
     RequestCallback,
     RequestConfig,
     Preprocessor,
-    BrowserClient
+    BClient
 }
