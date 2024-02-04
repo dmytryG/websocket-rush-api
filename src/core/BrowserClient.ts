@@ -14,13 +14,15 @@ export class BrowserClient {
     private pendingRequests: Map<string, RequestCallback>;
     private listeners: Map<string, Endpoint>;
     private _onCloseListener: () => void | undefined;
+    private url = '';
+
+    constructor(url: string) {
+        this.url = url
+        this.pendingRequests = new Map()
+    }
 
     set onCloseListener(value: () => (void | undefined)) {
         this._onCloseListener = value;
-    }
-
-    constructor(private url: string) {
-        this.pendingRequests = new Map()
     }
 
     protected processIncoming(client: BrowserClient): any {

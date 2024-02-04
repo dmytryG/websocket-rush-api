@@ -8,9 +8,6 @@ import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 
 export class Client {
-    set onCloseListener(value: () => (void | undefined)) {
-        this._onCloseListener = value;
-    }
     private ws: WebSocket | null = null;
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
@@ -19,6 +16,10 @@ export class Client {
 
     constructor(private url: string) {
         this.pendingRequests = new Map()
+    }
+
+    set onCloseListener(value: () => (void | undefined)) {
+        this._onCloseListener = value;
     }
 
     protected processIncoming(client: Client): any {
