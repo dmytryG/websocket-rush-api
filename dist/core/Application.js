@@ -153,7 +153,7 @@ class Application {
                 }
             });
             ws.on('close', () => {
-                this.clients.filter((c) => c.socket === ws);
+                this.clients = this.clients.filter((c) => c.socket === ws);
             });
             Logger_1.default.log("New client connected!");
         });

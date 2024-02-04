@@ -164,7 +164,7 @@ export class Application {
             });
 
             ws.on('close', () => {
-                this.clients.filter((c) => c.socket === ws)
+                this.clients = this.clients.filter((c) => c.socket === ws)
             });
             Logger.log("New client connected!")
         });
