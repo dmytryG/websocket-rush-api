@@ -6,6 +6,7 @@ import Logger from "./Logger";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 import {client, IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
+import * as console from "console";
 console.log('Importing BClient')
 
 export class BClient {
@@ -63,8 +64,14 @@ export class BClient {
 
         // Await connection establishment
         await new Promise((resolve, reject) => {
-            this.ws!.onopen = () => {resolve};
-            this.ws!.onerror = reject;
+            this.ws!.onopen = (() => {
+                console.log('Connection oppened')
+                resolve(undefined)
+            });
+            this.ws!.onerror = ((e) => {
+                console.log('Connection rejected', e)
+                reject(e)
+            });
         });
         console.log('Connected to ws')
 
