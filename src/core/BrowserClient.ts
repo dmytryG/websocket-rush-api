@@ -13,15 +13,20 @@ export class BrowserClient {
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
     private listeners: Map<string, Endpoint>;
-    private _onCloseListener: () => void | undefined;
+    private _onCloseListener: (() => void) | undefined;
     private url = '';
+
+    BrowserClient(url: string) {
+        this.url = url
+        this.pendingRequests = new Map()
+    }
 
     constructor(url: string) {
         this.url = url
         this.pendingRequests = new Map()
     }
 
-    set onCloseListener(value: () => (void | undefined)) {
+    public setOnCloseListener(value: () => void) {
         this._onCloseListener = value;
     }
 
@@ -151,7 +156,7 @@ export class BrowserClient {
     public onClose(): void {
         Logger.log("Called logging out of WS")
         this.connected = false;
-        this._onCloseListener()
+        this._onCloseListener?.call(undefined)
     }
 
     public close(): void {
