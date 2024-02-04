@@ -8,9 +8,21 @@ import {SocketClient} from "../src/types/SocketClient";
 import {Endpoint} from "../src/types/Endpoint";
 import {Message} from "../src/types/Message";
 import {Preprocessor} from "./types/Preprocessor";
-
+import {BrowserClient} from "./core/BrowserClient";
 
 
 declare module "@dmytryG/websocket-rush-api";
 
-export { Application, APIError, SocketClient, Endpoint, Message, Logger, Client, RequestCallback, RequestConfig, Preprocessor }
+export {
+    Application,
+    APIError,
+    SocketClient,
+    Endpoint,
+    Message,
+    Logger,
+    Client,
+    RequestCallback,
+    RequestConfig,
+    Preprocessor,
+    BrowserClient
+}
