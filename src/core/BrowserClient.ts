@@ -5,13 +5,19 @@ import {RequestCallback} from "../types/RequestCallback";
 import Logger from "./Logger";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
-import {IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
+import {client, IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
+import * as console from "console";
 
 export class BrowserClient {
     private ws: WebSocket | null = null;
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
     private listeners: Map<string, Endpoint>;
+    private _onCloseListener: () => void | undefined;
+
+    set onCloseListener(value: () => (void | undefined)) {
+        this._onCloseListener = value;
+    }
 
     constructor(private url: string) {
         this.pendingRequests = new Map()
@@ -143,6 +149,7 @@ export class BrowserClient {
     public onClose(): void {
         Logger.log("Called logging out of WS")
         this.connected = false;
+        this._onCloseListener()
     }
 
     public close(): void {

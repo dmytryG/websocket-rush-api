@@ -8,10 +8,14 @@ import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 
 export class Client {
+    set onCloseListener(value: () => (void | undefined)) {
+        this._onCloseListener = value;
+    }
     private ws: WebSocket | null = null;
     private connected: boolean = false
     private pendingRequests: Map<string, RequestCallback>;
     private listeners: Map<string, Endpoint>;
+    private _onCloseListener: () => void | undefined;
 
     constructor(private url: string) {
         this.pendingRequests = new Map()
@@ -137,9 +141,10 @@ export class Client {
         this.ws!.send(JSONToSend)
     }
 
-    public onClose(callback: () => void): void {
+    public onClose(): void {
         Logger.log("Called logging out of WS")
         this.connected = false;
+        this._onCloseListener()
     }
 
     public close(): void {
