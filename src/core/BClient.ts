@@ -6,7 +6,6 @@ import Logger from "./Logger";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 import {client, IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
-import * as console from "console";
 console.log('Importing BClient')
 
 export class BClient {
