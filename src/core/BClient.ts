@@ -6,7 +6,7 @@ import Logger from "./Logger";
 import APIError from "../types/APIError";
 import {Endpoint} from "../types/Endpoint";
 import {client, IMessageEvent, w3cwebsocket as WebSocket} from 'websocket';
-import * as console from "console";
+console.log('Importing BClient')
 
 export class BClient {
     private ws: WebSocket | null = null;
@@ -55,14 +55,18 @@ export class BClient {
 
     public async connect(): Promise<void> {
         Logger.log("Connecting client ws");
+        console.log('Instatination ws')
 
         this.ws = new WebSocket(this.url);
+
+        console.log('Awaiting connection')
 
         // Await connection establishment
         await new Promise((resolve, reject) => {
             this.ws!.onopen = () => {resolve};
             this.ws!.onerror = reject;
         });
+        console.log('Connected to ws')
 
         // Attach event handlers
         this.ws.onmessage = this.processIncoming(this); // Bind 'this' context
@@ -167,3 +171,4 @@ export class BClient {
         this.connected = false;
     }
 }
+console.log('Exporting BClient')
