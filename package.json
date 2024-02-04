@@ -1,6 +1,6 @@
 {
   "name": "@dmytryg/websocket-rush-api",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "A library for implementing and interaction with websocket API",
   "main": "./dist/main.js",
   "scripts": {
@@ -33,5 +33,6 @@
   },
   "repository": {
     "url": "git://github.com/dmytryG/websocket-rush-api.git"
-  }
+  },
+  "module": "./dist/main.js"
 }
