@@ -1,5 +1,3 @@
-import * as console from "console";
-
 export default class Logger {
     private static _isEnabled = true;
 
