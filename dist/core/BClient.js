@@ -10,16 +10,13 @@ const APIError_1 = __importDefault(require("../types/APIError"));
 const websocket_1 = require("websocket");
 console.log('Importing BClient');
 class BClient {
-    BrowserClient(url) {
-        this.url = url;
-        this.pendingRequests = new Map();
-    }
     constructor(url) {
         this.ws = null;
         this.connected = false;
         this.url = '';
         this.url = url;
         this.pendingRequests = new Map();
+        this.listeners = new Map();
     }
     setOnCloseListener(value) {
         this._onCloseListener = value;

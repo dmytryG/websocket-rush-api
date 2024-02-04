@@ -16,14 +16,10 @@ export class BClient {
     private _onCloseListener: (() => void) | undefined;
     private url = '';
 
-    BrowserClient(url: string) {
-        this.url = url
-        this.pendingRequests = new Map()
-    }
-
     constructor(url: string) {
         this.url = url
         this.pendingRequests = new Map()
+        this.listeners = new Map()
     }
 
     public setOnCloseListener(value: () => void) {
