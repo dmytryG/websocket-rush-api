@@ -32,6 +32,7 @@ export class BClient {
                 const parsed: Message = JSON.parse(msg.data.toString());
                 console.log("Client got message", parsed, "with id", parsed.id);
                 console.log(`There is ${client.pendingRequests.size} pending requests`);
+                console.log(`There is ${client.listeners.size} listeners`);
 
                 const pending = client.pendingRequests.get(parsed.id);
                 const listener = client.listeners.get(parsed.topic);
@@ -39,7 +40,8 @@ export class BClient {
                 if (pending) {
                     pending.callback(parsed);
                 } else if (listener) {
-                    listener.function(parsed, undefined);
+                    console.log(`Got message to process with listener by topic ${parsed.topic}`)
+                    listener.function(parsed, undefined).then(() => console.log('Listener compleated'));
                 } else {
                     return;
                 }
