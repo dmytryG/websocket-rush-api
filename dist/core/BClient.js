@@ -27,9 +27,10 @@ class BClient {
                 const parsed = JSON.parse(msg.data.toString());
                 console.log("Client got message", parsed, "with id", parsed.id);
                 console.log(`There is ${client.pendingRequests.size} pending requests`);
-                console.log(`There is ${client.listeners.size} listeners`);
+                console.log(`There is ${client.listeners.size} listeners`, this.listeners);
                 const pending = client.pendingRequests.get(parsed.id);
                 const listener = client.listeners.get(parsed.topic);
+                console.log('Listener', listener);
                 if (pending) {
                     pending.callback(parsed);
                 }
