@@ -16,6 +16,7 @@ export class Client {
 
     constructor(private url: string) {
         this.pendingRequests = new Map()
+        this.listeners = new Map()
     }
 
     set onCloseListener(value: () => (void | undefined)) {
