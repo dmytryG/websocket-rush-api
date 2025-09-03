@@ -15,6 +15,7 @@ class Application {
         this.preProcessors = [];
         this.endpoints = [];
         this.errorProcessor = null;
+        this.etcController = null;
         this.clients = [];
         this.args = { port };
     }
@@ -26,6 +27,10 @@ class Application {
     }
     setErrorProcessor(func) {
         this.errorProcessor = func;
+    }
+    // a controller is called when there are no corresponding by topic controller
+    setEtcController(func) {
+        this.etcController = func;
     }
     updateClientContext(ws, context) {
         const client = this.clients.find((c) => c.socket === ws);
@@ -102,7 +107,7 @@ class Application {
                         for (const preprocessor of this.preProcessors) {
                             await preprocessor(incomingMessage, this);
                         }
-                        const endponit = this.endpoints.find((e) => e.topic === incomingMessage.topic);
+                        const endponit = this.endpoints.find((e) => e.topic === incomingMessage.topic) ?? this.etcController;
                         if (!endponit) {
                             throw new APIError_1.default("Endpoint not found", 404);
                         }

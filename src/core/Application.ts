@@ -14,6 +14,7 @@ export class Application {
     private preProcessors: Array<Preprocessor> = [];
     private endpoints: Array<Endpoint> = [];
     private errorProcessor: ((e: any) => Promise<any>) | null = null;
+    private etcController: Endpoint | null = null;
     public clients: Array<SocketClient> = [];
 
     constructor(port: number) {
@@ -30,6 +31,11 @@ export class Application {
 
     public setErrorProcessor(func: (e: any) => Promise<any>): void {
         this.errorProcessor = func
+    }
+
+    // a controller is called when there are no corresponding by topic controller
+    public setEtcController(func: Endpoint): void {
+        this.etcController = func
     }
 
     public updateClientContext(ws: WebSocket, context: any): void {
@@ -115,7 +121,7 @@ export class Application {
                         for (const preprocessor of this.preProcessors) {
                             await preprocessor(incomingMessage, this)
                         }
-                        const endponit = this.endpoints.find((e) => e.topic === incomingMessage.topic)
+                        const endponit = this.endpoints.find((e) => e.topic === incomingMessage.topic) ?? this.etcController
                         if (!endponit) {
                             throw new APIError("Endpoint not found", 404)
                         }

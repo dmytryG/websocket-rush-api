@@ -14,6 +14,7 @@ class Client {
         this.ws = null;
         this.connected = false;
         this.pendingRequests = new Map();
+        this.listeners = new Map();
     }
     set onCloseListener(value) {
         this._onCloseListener = value;
